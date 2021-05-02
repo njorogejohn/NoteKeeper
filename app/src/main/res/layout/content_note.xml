@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine_title"
+        android:id="@+id/etTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -28,10 +28,11 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="@+id/spinner_courses"
         app:layout_constraintStart_toStartOf="@+id/spinner_courses"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_courses" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_courses"
+        />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/etText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -39,8 +40,9 @@
         android:gravity="start|top"
         android:hint="Type Your Thoughts Here"
         android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine_title"
+        app:layout_constraintEnd_toEndOf="@+id/etTitle"
         app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine_title"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine_title" />
+        app:layout_constraintStart_toStartOf="@+id/etTitle"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>
