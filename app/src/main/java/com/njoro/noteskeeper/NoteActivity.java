@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -22,8 +23,11 @@ import java.util.List;
 public class NoteActivity extends AppCompatActivity {
 
     private  EditText etTitle, etText;
+    String mTitle, mCourse,mText;
     private  List<CourseInfo> courses;
     private Spinner coursesSpinner;
+    private boolean isNewNote = true;
+    private NoteInfo note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +46,21 @@ public class NoteActivity extends AppCompatActivity {
 
         coursesSpinner.setAdapter(arrayAdapter);
 
-        readDisplayContents();
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            NoteInfo note = bundle.getParcelable("NOTE");
+
+            isNewNote = (note == null);
+        }
+
+        if (!isNewNote) {
+            readDisplayContents();
+        }
 
     }
 
     private void readDisplayContents() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            NoteInfo note = bundle.getParcelable("NOTE");
 
             String title = note.getTitle();
             if (!TextUtils.isEmpty(title)) {
@@ -62,11 +73,9 @@ public class NoteActivity extends AppCompatActivity {
             }
 
             CourseInfo courseInfoData = note.getCourse();
-
             if (courseInfoData != null) {
                 coursesSpinner.setSelection(courses.indexOf(courseInfoData));
             }
-        }
     }
 
     @Override
@@ -89,5 +98,31 @@ public class NoteActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveNote();
+    }
+
+    private void saveNote() {
+        mCourse = coursesSpinner.getSelectedItem().toString();
+        mTitle = etTitle.getText().toString().trim();
+        mText = etText.getText().toString().trim();
+
+        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        CourseInfo selectedCourse = null;
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).getTitle().equalsIgnoreCase(mCourse)) {
+                selectedCourse = courses.get(i);
+                break;
+            }
+        }
+
+        if (selectedCourse != null && !TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mText)) {
+            int size = DataManager.getInstance().createNewNote(selectedCourse,mTitle,mText);
+            Log.e("TAG NOTES KEEPER","number of notes: "+size);
+        }
     }
 }

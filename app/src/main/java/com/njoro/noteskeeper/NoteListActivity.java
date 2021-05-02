@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Adapter;
@@ -29,14 +30,9 @@ public class NoteListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> startActivity(new Intent(this, NoteActivity.class))
+        );
 
         initializeDisplayContent();
     }
@@ -45,6 +41,7 @@ public class NoteListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerview_notes);
 
         List<NoteInfo> noteInfoList = DataManager.getInstance().getNotes();
+        Log.e("TAG NOTES KEEPER", "number of notes LIST: "+noteInfoList.size());
         NotesAdapter notesAdapter = new NotesAdapter(noteInfoList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
