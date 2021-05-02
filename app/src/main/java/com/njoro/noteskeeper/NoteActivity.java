@@ -21,6 +21,10 @@ import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
+    private  EditText etTitle, etText;
+    private  List<CourseInfo> courses;
+    private Spinner coursesSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +32,21 @@ public class NoteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Spinner coursesSpinner = findViewById(R.id.spinner_courses);
-        EditText etTitle = findViewById(R.id.etTitle);
-        EditText etText = findViewById(R.id.etText);
+        coursesSpinner = findViewById(R.id.spinner_courses);
+        etTitle = findViewById(R.id.etTitle);
+        etText = findViewById(R.id.etText);
 
-        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        courses = DataManager.getInstance().getCourses();
         ArrayAdapter<CourseInfo> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courses);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         coursesSpinner.setAdapter(arrayAdapter);
 
+        readDisplayContents();
+
+    }
+
+    private void readDisplayContents() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             NoteInfo note = bundle.getParcelable("NOTE");
@@ -53,19 +62,11 @@ public class NoteActivity extends AppCompatActivity {
             }
 
             CourseInfo courseInfoData = note.getCourse();
+
             if (courseInfoData != null) {
-                String course = courseInfoData.getTitle();
-                if (!TextUtils.isEmpty(course)) {
-                    for (int i = 0; i < courses.size(); i++) {
-                        if (courses.get(i).getTitle().equalsIgnoreCase(course)) {
-                            coursesSpinner.setSelection(i);
-                            break;
-                        }
-                    }
-                }
+                coursesSpinner.setSelection(courses.indexOf(courseInfoData));
             }
         }
-
     }
 
     @Override
