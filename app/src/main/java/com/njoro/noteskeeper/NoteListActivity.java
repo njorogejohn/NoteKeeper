@@ -55,10 +55,7 @@ public class NoteListActivity extends AppCompatActivity {
 
         notesAdapter.setOnItemClickListener((noteInfo) -> {
             Intent intent = new Intent(this, NoteActivity.class);
-            intent.putExtra("COURSE",noteInfo.getCourse().getTitle());
-            intent.putExtra("TITLE",noteInfo.getTitle());
-            intent.putExtra("TEXT",noteInfo.getText());
-
+            intent.putExtra("NOTE", noteInfo);
             startActivity(intent);
         });
     }

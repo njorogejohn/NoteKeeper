@@ -40,22 +40,27 @@ public class NoteActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
-            String course = bundle.getString("COURSE");
-            String title = bundle.getString("TITLE");
-            String text = bundle.getString("TEXT");
+            NoteInfo note = bundle.getParcelable("NOTE");
 
+            String title = note.getTitle();
             if (!TextUtils.isEmpty(title)) {
                 etTitle.setText(title);
             }
 
+            String text = note.getText();
             if (!TextUtils.isEmpty(text)) {
                 etText.setText(text);
             }
 
-            if (!TextUtils.isEmpty(course)) {
-                for (CourseInfo courseInfo : courses) {
-                    if (courseInfo.getTitle().equalsIgnoreCase(course)) {
-
+            CourseInfo courseInfoData = note.getCourse();
+            if (courseInfoData != null) {
+                String course = courseInfoData.getTitle();
+                if (!TextUtils.isEmpty(course)) {
+                    for (int i = 0; i < courses.size(); i++) {
+                        if (courses.get(i).getTitle().equalsIgnoreCase(course)) {
+                            coursesSpinner.setSelection(i);
+                            break;
+                        }
                     }
                 }
             }
