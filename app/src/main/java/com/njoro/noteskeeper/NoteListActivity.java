@@ -58,6 +58,8 @@ public class NoteListActivity extends AppCompatActivity {
             intent.putExtra("COURSE",noteInfo.getCourse().getTitle());
             intent.putExtra("TITLE",noteInfo.getTitle());
             intent.putExtra("TEXT",noteInfo.getText());
+
+            startActivity(intent);
         });
     }
 }

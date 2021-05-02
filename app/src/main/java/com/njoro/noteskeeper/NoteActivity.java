@@ -44,8 +44,20 @@ public class NoteActivity extends AppCompatActivity {
             String title = bundle.getString("TITLE");
             String text = bundle.getString("TEXT");
 
+            if (!TextUtils.isEmpty(title)) {
+                etTitle.setText(title);
+            }
+
+            if (!TextUtils.isEmpty(text)) {
+                etText.setText(text);
+            }
+
             if (!TextUtils.isEmpty(course)) {
-                DataManager.getInstance().
+                for (CourseInfo courseInfo : courses) {
+                    if (courseInfo.getTitle().equalsIgnoreCase(course)) {
+
+                    }
+                }
             }
         }
 
